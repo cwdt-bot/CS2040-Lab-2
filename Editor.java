@@ -58,7 +58,7 @@ public class Editor {
 
 /**
  * This is an subclass of dLinkedList. 
- * This form is able to track the current position of the user in the list, 
+ * This form is able to track the current position of a 'pointer' in the list, 
  * for quicker splicing and traversal from the current position. 
  * @param <T> type of object to be stored
  */
@@ -67,7 +67,7 @@ class pointerLinkedList<T> extends dLinkedList<T> {
     
     /**
      * This overrides the default add() method (which adds to the back)
-     * Instead, it adds to the next position to the current position 
+     * Instead, it adds to the right of the current position 
      */
     @Override
     public void add(T t) {
@@ -82,6 +82,8 @@ class pointerLinkedList<T> extends dLinkedList<T> {
 
     /**
      * Moves the position forwards(i.e. towards the tail)
+     * The behaviour at the head is the same as dLinkedList
+     * i.e. it returns the head. 
      */
     public void moveForwards() {
         this.curr = this.curr.next();
@@ -89,6 +91,8 @@ class pointerLinkedList<T> extends dLinkedList<T> {
 
     /**
      * Moves the position backwards(i.e towards the head)
+     * The behaviour at the tail is the same as dLinkedList 
+     * i.e. it returns the tail. 
      */
     public void moveBackwards() {
         this.curr = this.curr.prev();
@@ -116,7 +120,8 @@ class pointerLinkedList<T> extends dLinkedList<T> {
 
     /**
      * Inserts values to the left(towards the head) of the current position.
-     * These values should come within a dLinkedList. 
+     * Precond:Values should come within a dLinkedList. 
+     * Postcond: current list is modified with the chunk added to the left of pointer,
      * Current position does not change. 
      * @param chunk a dLinkedList of values to add
      */
@@ -134,9 +139,10 @@ class pointerLinkedList<T> extends dLinkedList<T> {
 
     /**
      * Overloaded form of the insertOnLeft() method. 
-     * This adds a single element to the left of the current position. 
+     * Precond: object must be the same type as the list. 
+     * Postcond: adds a single element to the left of the current position. 
      * Current position does not change. 
-     * @param t
+     * @param t element to be inserted
      */
     public void insertOnLeft(T t) {
         Node<T> newNode = new Node<>(t);
@@ -155,7 +161,7 @@ class pointerLinkedList<T> extends dLinkedList<T> {
     /**
      * Removes the element on the left of the current position. 
      * Does nothing if the current position is the head. 
-     * Current position does not change. 
+     * Postcond: Current position does not change, element on left of pointer is removed
      */
     public void removeOnLeft() {
         //case 1: curr == head
@@ -281,7 +287,7 @@ class dLinkedList<T> {
     }
 
     /**
-     * Prints to console the contents of the dLinkedList.
+     * Postcond: Prints to console the contents of the dLinkedList.
      */
     public void show() {
         if (this.head == null) {}
